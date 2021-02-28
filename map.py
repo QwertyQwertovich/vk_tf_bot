@@ -1,10 +1,11 @@
 import generator
 import math
 class city:
-    def __init__(self, seed, x, y):
+    def __init__(self, seed, x, y, population):
         self.seed = seed
         self.x = x
         self.y = y
+        self.population = population
 class farm:
     def __init__(self, seed, x, y, type):
         self.seed = seed
@@ -28,7 +29,7 @@ class country:
                     is_ok = False
                     break
             if is_ok:
-                c = city(seed, round(generator.get_number(seed, x, 0, 1000)), round(generator.get_number(seed, y, 0, 1000)))
+                c = city(seed, round(generator.get_number(seed, x, 0, 1000)), round(generator.get_number(seed, y, 0, 1000)), round(generator.get_number(seed, y, 0, 10 ** round(generator.get_number(seed, y, 3, 6)))))
                 self.cities.append(c)
             if len(self.cities) == 5:
                 break
