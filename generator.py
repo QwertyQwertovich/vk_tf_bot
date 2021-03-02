@@ -5,4 +5,4 @@ def get_number(seed,number,left,right):
     ans = (((ans - 100000000) * (right - left)) / (9999999999 - 100000000)) + left
     return ans
 def get_seed():
-    return randint(100000000,9999999999)
+    return randint(1000000000,9999999999)

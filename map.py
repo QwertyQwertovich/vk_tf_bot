@@ -29,7 +29,7 @@ class country:
                     is_ok = False
                     break
             if is_ok:
-                c = city(seed, round(generator.get_number(seed, x, 0, 1000)), round(generator.get_number(seed, y, 0, 1000)), round(generator.get_number(seed, y, 0, 10 ** round(generator.get_number(seed, y, 3, 6)))))
+                c = city(seed, round(generator.get_number(seed, x, 0, 1000)), round(generator.get_number(seed, y, 0, 1000)), abs(round(generator.get_number(seed, y, 0, 10 ** round(generator.get_number(seed, y, 3, 6))))))
                 self.cities.append(c)
             if len(self.cities) == 5:
                 break

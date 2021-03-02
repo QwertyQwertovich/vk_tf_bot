@@ -23,7 +23,7 @@ class PerlinNoiseFactory(object):
     the fly as necessary.
     """
 
-    def __init__(self, dimension, octaves=1, tile=(), unbias=False):
+    def __init__(self, dimension,seed, octaves=1, tile=(), unbias=False):
         """Create a new Perlin noise factory in the given number of dimensions,
         which should be an integer and at least 1.
         More octaves create a foggier and more-detailed noise pattern.  More
@@ -36,6 +36,7 @@ class PerlinNoiseFactory(object):
         output before returning it, to counteract some of Perlin noise's
         significant bias towards the center of its output range.
         """
+        self.seed = seed
         self.dimension = dimension
         self.octaves = octaves
         self.tile = tile + (0,) * dimension
@@ -53,6 +54,7 @@ class PerlinNoiseFactory(object):
 
         # 1 dimension is special, since the only unit vector is trivial;
         # instead, use a slope between -1 and 1
+        random.seed = self.seed
         if self.dimension == 1:
             return (random.uniform(-1, 1),)
 
