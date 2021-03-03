@@ -12,6 +12,16 @@ class farm:
         self.x = x
         self.y = y
         self.type = type
+class road:
+    def __init__(self, type, start, end):
+        self.type = type
+        self.start = start
+        self.end = end
+class railroad:
+    def __init__(self, type, start, end):
+        self.type = type
+        self.start = start
+        self.end = end
 class country:
     def __init__(self, seed):
         self.seed = seed
