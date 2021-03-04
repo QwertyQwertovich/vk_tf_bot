@@ -13,6 +13,11 @@ class farm:
         self.x = x
         self.y = y
         self.type = type
+class intersection:
+    def __init__(self, x, y, type):
+        self.x = x
+        self.y = y
+        self.type = type
 class road:
     def __init__(self, type, start, end, x1, y1, x2, y2):
         self.startx = x1
@@ -34,10 +39,10 @@ class road:
         x, y, z = np.cross(l1, l2)  # point of intersection
         if z == 0:  # lines are parallel
             return False
-        if (a1[0] <= x / z <= a2[0] or a1[0] >= x / z >= a2[0]) and (
-                b1[0] <= x / z <= b2[0] or b1[0] >= x / z >= b2[0]) and (
-                a1[1] <= y / z <= a2[1] or a1[1] >= y / z >= a2[1]) and (
-                b1[1] <= y / z <= b2[1] or b1[1] >= y / z >= b2[1]):
+        if (a1[0] < x / z < a2[0] or a1[0] > x / z > a2[0]) and (
+                b1[0] < x / z < b2[0] or b1[0] > x / z > b2[0]) and (
+                a1[1] < y / z < a2[1] or a1[1] > y / z > a2[1]) and (
+                b1[1] < y / z < b2[1] or b1[1] > y / z > b2[1]):
             return [x / z, y / z]
         return False
 class country:
@@ -47,6 +52,7 @@ class country:
         self.cities = []
         self.farms = []
         self.roads = []
+        self.intersections = []
         x = 554
         y = 123
         while True:
@@ -98,4 +104,32 @@ class country:
             ey = self.cities[endc].y
             end = self.cities[endc]
             r = road(typ, start, end, sx, sy, ex, ey)
-            self.roads.append(r)
+            k = 0
+            for i1 in self.roads:
+                if i1.startx == r.startx and i1.starty == r.starty and i1.endx == r.endx and i1.endy == r.endy:
+                    k = k+1
+                    break
+                self.add_intersection(i1, r)
+            if k == 0:
+                self.roads.append(r)
+
+    def add_intersection(self, road1, road2):
+        xy = road1.check_intersections(road2)
+        if xy != False:
+            x = round(int(xy[0]))
+            y = round(int(xy[1]))
+            inter = intersection(x, y, "")
+            self.intersections.append(inter)
+            r1 = road(road1.type, road1.start, inter, road1.startx, road1.starty, x, y)
+            r2 = road(road1.type, inter, road1.end, x, y, road1.endx, road1.endy)
+            r3 = road(road2.type, road2.start, inter, road2.startx, road2.starty, x, y)
+            r4 = road(road2.type, inter, road2.end, x, y, road2.endx, road2.endy)
+            self.roads.append(r1)
+            self.roads.append(r2)
+            self.roads.append(r3)
+            self.roads.append(r4)
+            try:
+                self.roads.remove(road1)
+                self.roads.remove(road2)
+            except:
+                pass
