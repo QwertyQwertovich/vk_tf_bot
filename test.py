@@ -32,7 +32,4 @@ def get_normal(x1,y1,x2,y2,x,y):
         return g
     else:
         return False
-    #xn = a*(x+a*y-a*b)/(a**2+1)
-    #yn = a**2*(x+a*y-a*b)/(a**2+1)+b
-    return [xn, yn]
 print(get_normal(0,0,2,1,1,1))
